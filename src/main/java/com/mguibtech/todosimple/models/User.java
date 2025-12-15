@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -51,6 +51,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Task> tasks = new ArrayList<Task>();
 
+    @JsonIgnore
     public List<Task> getTasks() {
         return this.tasks;
     }
