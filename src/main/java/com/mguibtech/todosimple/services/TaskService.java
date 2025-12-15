@@ -38,6 +38,7 @@ public class TaskService {
         User user = this.userService.findById(obj.getUser().getId());
         obj.setId(null);
         obj.setUser(user);
+        obj.setCompleted(false);
         obj = this.taskRepository.save(obj);
         return obj;
     }
@@ -46,6 +47,9 @@ public class TaskService {
     public Task update(Task obj) {
         Task newObj = findById(obj.getId());
         newObj.setDescription(obj.getDescription());
+        if (obj.getCompleted() != null) {
+            newObj.setCompleted(obj.getCompleted());
+        }
         return this.taskRepository.save(newObj);
     }
 
@@ -57,5 +61,12 @@ public class TaskService {
         }catch (Exception e){
             throw new RuntimeException("Não é possível excluir pois há entidades relacionadas!");
         }
+    }
+
+    @Transactional
+    public Task complete(Long id) {
+        Task newObj = findById(id);
+        newObj.setCompleted(!newObj.getCompleted());
+        return this.taskRepository.save(newObj);
     }
 }

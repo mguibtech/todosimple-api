@@ -35,6 +35,9 @@ public class Task {
     @Size(min = 1, max = 255)
     private String description;
 
+    @Column(name = "completed", nullable = false, columnDefinition = "boolean default false")
+    private Boolean completed = false;
+
     public Task() {
     }
 
@@ -42,6 +45,14 @@ public class Task {
         this.id = id;
         this.user = user;
         this.description = description;
+        this.completed = false;
+    }
+
+    public Task(Long id, User user, String description, Boolean completed) {
+        this.id = id;
+        this.user = user;
+        this.description = description;
+        this.completed = completed != null ? completed : false;
     }
 
     public Long getId() {
@@ -68,6 +79,14 @@ public class Task {
         this.description = description;
     }
 
+    public Boolean getCompleted() {
+        return this.completed;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed != null ? completed : false;
+    }
+
     public Task id(Long id) {
         setId(id);
         return this;
@@ -80,6 +99,11 @@ public class Task {
 
     public Task description(String description) {
         setDescription(description);
+        return this;
+    }
+
+    public Task completed(Boolean completed) {
+        setCompleted(completed);
         return this;
     }
 
@@ -98,7 +122,8 @@ public class Task {
             else if (!this.id.equals(other.id))
                 return false;
         return Objects.equals(this.id, other.id) && Objects.equals(this.user, other.user)
-                && Objects.equals(this.description, other.description);
+                && Objects.equals(this.description, other.description)
+                && Objects.equals(this.completed, other.completed);
     }
 
     @Override

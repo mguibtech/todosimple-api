@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -67,4 +68,9 @@ public class TaskController {
         return ResponseEntity.ok().body(objs);
     }
 
+    @PatchMapping("/{id}/complete")
+    public ResponseEntity<Void> complete(@PathVariable Long id){
+        this.taskService.complete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
